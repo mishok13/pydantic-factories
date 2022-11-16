@@ -21,6 +21,7 @@ def create_constrained_field(
 
 
 REGEXES = [
+    r'^apple (pie|tart|sandwich)$',
     r"(a|b|c)xz",
     r"a|b",
     r"[0-9]{2,4}",
@@ -28,6 +29,7 @@ REGEXES = [
     r"ma?n",
     r"ma+n",
     r"ma*n",
+    r"^ma*n$",
     r"a$",
     r"\Athe",
     r"\bfoo",
@@ -54,6 +56,7 @@ def test_handle_constrained_string_with_min_length_and_max_length_and_regex(
                 assert result == result.lower()
             match = re.search(regex, result)
 
+            assert match is not None, (regex, result)
             if match:
                 assert match.group(0)
             assert len(result) >= min_length
